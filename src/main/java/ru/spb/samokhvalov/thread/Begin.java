@@ -26,6 +26,12 @@ public class Begin implements Runnable {
         for (int i = 0; i<=100; i++){
             FirstStep data = new FirstStep(" " + random.nextInt() + " id: " + i, " id: " + i);
             outgoingQueue.offer(data);
+//            System.out.println(Thread.currentThread().getName() + " add: " + (i));
+            try {
+                Thread.sleep(50);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
 
         }
     }

@@ -1,5 +1,6 @@
 package ru.spb.samokhvalov.thread;
 
+import org.springframework.beans.factory.BeanNameAware;
 import ru.spb.samokhvalov.DTO.FirstStep;
 
 import java.util.concurrent.BlockingQueue;
@@ -16,7 +17,7 @@ public class Next implements Runnable {
     }
 
     public void start() {
-        Thread thread = new Thread(this, "Next thread");
+        Thread thread = new Thread(this);
         thread.start();
     }
 
@@ -24,15 +25,19 @@ public class Next implements Runnable {
     @Override
     public void run() {
         int i = 0;
-        while (incomingQueue.size()>0) {
+        while (true) {
             try {
                 Thread.sleep(100);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            FirstStep step = incomingQueue.poll();
-            System.out.print("step: " + (++i) + " ");
-            System.out.println(step);
+            int size = incomingQueue.size();
+            if (size > 0) {
+                FirstStep step = incomingQueue.poll();
+                if (step != null) {
+                    System.out.println(Thread.currentThread().getName() + " current size: " + size);
+                }
+            }
         }
 
     }

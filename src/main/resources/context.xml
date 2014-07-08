@@ -3,8 +3,9 @@
        xmlns:p="http://www.springframework.org/schema/p"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:task="http://www.springframework.org/schema/task"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-   		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd"
+   		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd"
        default-init-method="start"
        default-destroy-method="destroy">
 
@@ -12,16 +13,22 @@
 
     <bean id="theQueue" class="java.util.concurrent.PriorityBlockingQueue"/>
 
+    <!--<task:scheduler id="scheduler" pool-size="3"/>-->
+    <task:scheduled-tasks>
+        <task:scheduled ref="fffirsts" method="start" fixed-rate="1000"/>
+    </task:scheduled-tasks>
     <bean id="fffirsts" class="ru.spb.samokhvalov.thread.Begin">
         <constructor-arg ref="theQueue"/>
     </bean>
 
-    <bean id="ssssecondsss" class="ru.spb.samokhvalov.thread.Next">
+    <bean class="ru.spb.samokhvalov.thread.LoadClass">
+        <constructor-arg name="count" value="9"/>
         <constructor-arg ref="theQueue"/>
     </bean>
-    <bean id="ssssecondsss11" class="ru.spb.samokhvalov.thread.Next">
-        <constructor-arg ref="theQueue"/>
-    </bean>
+    <!--<bean id="ssssecondsss0" class="ru.spb.samokhvalov.thread.Next">-->
+        <!--<constructor-arg ref="theQueue"/>-->
+
+    <!--</bean>-->
 
     <!--<bean id="JohnSmith" class="com.captaindebug.producerconsumer.MatchReporter">-->
         <!--<constructor-arg ref="match2"/>-->
