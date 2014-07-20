@@ -9,37 +9,66 @@
        default-init-method="start"
        default-destroy-method="destroy">
 
+    <context:annotation-config/>
+
     <!--<import resource="matches.xml" />-->
 
-    <bean id="theQueue" class="java.util.concurrent.PriorityBlockingQueue"/>
+    <bean id="theQueue" class="java.util.concurrent.ConcurrentLinkedQueue"/>
+    <bean id="delayed" class="ru.spb.samokhvalov.DTO.DelayedImpl"/>
 
-    <!--<task:scheduler id="scheduler" pool-size="3"/>-->
-    <task:scheduled-tasks>
-        <task:scheduled ref="fffirsts" method="start" fixed-rate="1000"/>
-    </task:scheduled-tasks>
+    <!--<bean class="ru.spb.samokhvalov.DTO.DelayedImpl"/>-->
+    <!--<task:scheduler id="scheduler"/>-->
+    <!--<task:scheduled-tasks>-->
+        <!--<task:scheduled ref="fffirsts" method="run" fixed-rate="10000"/>-->
+    <!--</task:scheduled-tasks>-->
+
     <bean id="fffirsts" class="ru.spb.samokhvalov.thread.Begin">
         <constructor-arg ref="theQueue"/>
     </bean>
 
-    <bean class="ru.spb.samokhvalov.thread.LoadClass">
-        <constructor-arg name="count" value="9"/>
+    <!--<bean class="ru.spb.samokhvalov.thread.LoadClass">-->
+        <!--<constructor-arg name="count" value="2"/>-->
+        <!--<constructor-arg ref="theQueue"/>-->
+    <!--</bean>-->
+    <bean id="ssssecondsss0" class="ru.spb.samokhvalov.thread.Next">
         <constructor-arg ref="theQueue"/>
     </bean>
-    <!--<bean id="ssssecondsss0" class="ru.spb.samokhvalov.thread.Next">-->
-        <!--<constructor-arg ref="theQueue"/>-->
 
+    <bean id="ssssecondsss1" class="ru.spb.samokhvalov.thread.Next">
+        <constructor-arg ref="theQueue"/>
+    </bean>
+    <!--<bean id="ssssecondsss2" class="ru.spb.samokhvalov.thread.Next">-->
+        <!--<constructor-arg ref="theQueue"/>-->
+    <!--</bean>-->
+
+    <!--<bean id="ssssecondsss3" class="ru.spb.samokhvalov.thread.Next">-->
+        <!--<constructor-arg ref="theQueue"/>-->
+    <!--</bean>-->
+    <!--<bean id="ssssecondsss4" class="ru.spb.samokhvalov.thread.Next">-->
+        <!--<constructor-arg ref="theQueue"/>-->
+    <!--</bean>-->
+
+    <!--<bean id="ssssecondsss5" class="ru.spb.samokhvalov.thread.Next">-->
+        <!--<constructor-arg ref="theQueue"/>-->
+    <!--</bean>-->
+    <!--<bean id="ssssecondsss6" class="ru.spb.samokhvalov.thread.Next">-->
+        <!--<constructor-arg ref="theQueue"/>-->
+    <!--</bean>-->
+
+    <!--<bean id="ssssecondsss7" class="ru.spb.samokhvalov.thread.Next">-->
+        <!--<constructor-arg ref="theQueue"/>-->
     <!--</bean>-->
 
     <!--<bean id="JohnSmith" class="com.captaindebug.producerconsumer.MatchReporter">-->
-        <!--<constructor-arg ref="match2"/>-->
-        <!--<constructor-arg ref="theQueue"/>-->
+    <!--<constructor-arg ref="match2"/>-->
+    <!--<constructor-arg ref="theQueue"/>-->
     <!--</bean>-->
 
     <!--<bean id="printHead" class="com.captaindebug.producerconsumer.PrintHead"/>-->
 
     <!--<bean id="StudioTeletype" class="com.captaindebug.producerconsumer.original.Teletype">-->
-        <!--<constructor-arg ref="printHead"/>-->
-        <!--<constructor-arg ref="theQueue"/>-->
+    <!--<constructor-arg ref="printHead"/>-->
+    <!--<constructor-arg ref="theQueue"/>-->
     <!--</bean>-->
 
 </beans>

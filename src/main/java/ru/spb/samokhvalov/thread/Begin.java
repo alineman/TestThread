@@ -1,17 +1,24 @@
 package ru.spb.samokhvalov.thread;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import ru.spb.samokhvalov.DTO.Delayed;
 import ru.spb.samokhvalov.DTO.FirstStep;
+import ru.spb.samokhvalov.DTO.StaticDelay;
 
+import java.util.AbstractQueue;
 import java.util.Random;
-import java.util.concurrent.BlockingQueue;
 
 /**
  * Created by ivan on 08.07.14.
  */
 public class Begin implements Runnable {
-    private final BlockingQueue<FirstStep> outgoingQueue;
 
-    public Begin(BlockingQueue<FirstStep> incomingQueue) {
+    @Autowired
+    Delayed delayed;
+
+    private final AbstractQueue<FirstStep> outgoingQueue;
+
+    public Begin(AbstractQueue<FirstStep> incomingQueue) {
         this.outgoingQueue = incomingQueue;
     }
 
@@ -27,11 +34,14 @@ public class Begin implements Runnable {
             FirstStep data = new FirstStep(" " + random.nextInt() + " id: " + i, " id: " + i);
             outgoingQueue.offer(data);
 //            System.out.println(Thread.currentThread().getName() + " add: " + (i));
-            try {
-                Thread.sleep(50);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+//            try {
+//                Thread.sleep(50);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+            long t = System.currentTimeMillis();
+            StaticDelay.delay(100);
+            System.out.println(Thread.currentThread().getName() + " time: " + (System.currentTimeMillis() - t));
 
         }
     }
